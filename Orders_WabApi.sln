@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orders_WabApi", "Orders_WabApi\Orders_WabApi.csproj", "{FC6D4861-9CE1-486D-B068-1E8B1AC724F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "EntityFramework\EntityFramework.csproj", "{CD4BD7B8-132F-4393-89A6-60E0EAEFE30D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{E1EA65A1-A1C5-4454-80EF-BB4C80C06E0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC6D4861-9CE1-486D-B068-1E8B1AC724F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6D4861-9CE1-486D-B068-1E8B1AC724F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6D4861-9CE1-486D-B068-1E8B1AC724F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6D4861-9CE1-486D-B068-1E8B1AC724F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD4BD7B8-132F-4393-89A6-60E0EAEFE30D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD4BD7B8-132F-4393-89A6-60E0EAEFE30D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD4BD7B8-132F-4393-89A6-60E0EAEFE30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD4BD7B8-132F-4393-89A6-60E0EAEFE30D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1EA65A1-A1C5-4454-80EF-BB4C80C06E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1EA65A1-A1C5-4454-80EF-BB4C80C06E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1EA65A1-A1C5-4454-80EF-BB4C80C06E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1EA65A1-A1C5-4454-80EF-BB4C80C06E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
