@@ -11,31 +11,31 @@ namespace Orders_WabApi.Controllers;
 [Route("users")]
 public class OrderController : Controller
 {
-    private readonly ApplicationRepository _applicationRepository;
+    private readonly UserRepository _userRepository;
     
-    public OrderController(ApplicationRepository applicationRepository)
+    public OrderController(UserRepository userRepository)
     {
-        _applicationRepository = applicationRepository;
+        _userRepository = userRepository;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAllUsersWithOrders()
     {
-        var users = await _applicationRepository.GetAllUsersWithOrdersAsync();
+        var users = await _userRepository.GetAllUsersWithOrdersAsync();
         return Ok(users);
     }
 
     [HttpGet("byid")]
     public async Task<IActionResult> GetUserById([FromQuery]int id)
     {
-        var user = await _applicationRepository.GetUserByIdAsync(id);
+        var user = await _userRepository.GetUserByIdAsync(id);
         return Ok(user);
     }
 
     [HttpGet("byidwithorders")]
     public async Task<IActionResult> GetUserByIdWithOrders([FromQuery] int id)
     {
-        var user = await _applicationRepository.GetUserByIdWithOrdersAsync(id);
+        var user = await _userRepository.GetUserByIdWithOrdersAsync(id);
         if(user == null)
             return BadRequest();
         
@@ -45,14 +45,14 @@ public class OrderController : Controller
     [HttpPost]
     public async Task<IActionResult> AddUser(RequestOnlyUserDTO user)
     {
-        var newUser = await _applicationRepository.AddOnlyUserAsync(user.Name, user.SecondName);
+        var newUser = await _userRepository.AddOnlyUserAsync(user.Name, user.SecondName);
         return Ok(newUser);
     }
 
     [HttpPost("addAll")]
     public async Task<IActionResult> AddUserWithOrders(RequestUserDTO userDto)
     {
-        var user = await _applicationRepository.AddUserAsync(userDto);
+        var user = await _userRepository.AddUserAsync(userDto);
         return Ok(user);
     }
     

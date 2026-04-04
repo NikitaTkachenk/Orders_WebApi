@@ -11,7 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddValidation();
 builder.Services.AddDataBase();
-builder.Services.AddScoped<ApplicationRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 var app = builder.Build();
 

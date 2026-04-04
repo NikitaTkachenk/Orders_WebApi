@@ -8,6 +8,7 @@ public class User
     
     [ConcurrencyCheck] // Потрібен для того, щоб при коригуванні, видаленні інформації не можна було змінити ці поля! видасть Ексцепшн!
     public string Name { get; set; } = null!;
+    
     [ConcurrencyCheck]
     public string SecondName { get; set; } = null!;
     

@@ -4,7 +4,7 @@ using Orders_WabApi.Entity;
 
 namespace EntityFramework;
 
-public class ApplicationRepository(ApplicationContext context)
+public class UserRepository(ApplicationContext context)
 {
     public async Task<User> GetUserByIdAsync(int id)
     {
