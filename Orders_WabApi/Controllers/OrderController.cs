@@ -8,7 +8,7 @@ using Orders_WabApi.Entity;
 namespace Orders_WabApi.Controllers;
 
 [ApiController]
-[Route("orders")]
+[Route("users")]
 public class OrderController : Controller
 {
     private readonly ApplicationRepository _applicationRepository;
@@ -47,6 +47,13 @@ public class OrderController : Controller
     {
         var newUser = await _applicationRepository.AddOnlyUserAsync(user.Name, user.SecondName);
         return Ok(newUser);
+    }
+
+    [HttpPost("addAll")]
+    public async Task<IActionResult> AddUserWithOrders(RequestUserDTO userDto)
+    {
+        var user = await _applicationRepository.AddUserAsync(userDto);
+        return Ok(user);
     }
     
     

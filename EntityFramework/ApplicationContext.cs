@@ -15,7 +15,8 @@ public class ApplicationContext(DbContextOptions<ApplicationContext> options) : 
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
         modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
-        modelBuilder.Entity<User>();
+        modelBuilder.Entity<User>().Property(u => u.Name).IsConcurrencyToken();
+        modelBuilder.Entity<User>().Property(u => u.SecondName).IsConcurrencyToken();
     }
 }
 

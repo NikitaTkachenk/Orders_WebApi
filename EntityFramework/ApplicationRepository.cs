@@ -60,33 +60,46 @@ public class ApplicationRepository(ApplicationContext context)
 
     }
     
-    public async Task<User> AddUserAsync(string userName, string secondName, string orderName
-        , string orderDescription, string orderItemName, string orderItemDescription, decimal orderItemPrice)
+    public async Task<RequestUserDTO> AddUserAsync(RequestUserDTO userDto)
     {   
         var user = new User
         {
-            Name = userName
-            , SecondName = secondName
-            , Orders = new List<Order>
+            Name = userDto.Name
+            , SecondName = userDto.SecondName
+            , Orders = userDto.Orders.Select(o => new Order
             {
-                new Order
+                Name = o.Name
+                , Description = o.Description
+                , OrderDate =  DateTime.UtcNow
+                ,OrderItem = new OrderItem()
                 {
-                    Name = orderName
-                    , Description = orderDescription
-                    , OrderDate =  DateTime.Now
-                    ,OrderItem = new OrderItem()
-                    {
-                        Name = orderItemName
-                        ,Description = orderItemDescription
-                        , Price = orderItemPrice
-                    }
+                    Name = o.OrderItem.Name
+                    ,Description = o.OrderItem.Description
+                    , Price = o.OrderItem.Price
                 }
-            }
+            }).ToList()
         };
         
         await context.AddAsync(user);
         await context.SaveChangesAsync();
-        return user;
+        
+        return new RequestUserDTO
+        {
+            Name = user.Name,
+            SecondName = user.SecondName,
+            Orders = user.Orders.Select(o => new RequestOrderDTO
+            {
+                Name = o.Name,
+                Description = o.Description,
+                OrderDate = o.OrderDate,
+                OrderItem = new RequestOrderItemDTO
+                {
+                    Name = o.OrderItem.Name,
+                    Description = o.OrderItem.Description,
+                    Price = o.OrderItem.Price
+                }
+            }).ToList()
+        };
     }
 
     public async Task<List<RequestUserDTO>> GetAllUsersWithOrdersAsync()
