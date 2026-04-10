@@ -22,21 +22,21 @@ public class OrderController : Controller
         _orderRepository = orderRepository;
     }
 
-    [HttpGet("userstfilter")]
+    [HttpGet("users")]
     public async Task<IActionResult> GetAllUsersWithOrders([FromQuery]UserFilter userFilter)
     {
         var users = await _userRepository.GetAllUsersWithOrdersAsync(userFilter);
         return Ok(users);
     }
 
-    [HttpGet("byid")]
+    [HttpGet("userbyid")]
     public async Task<IActionResult> GetUserById([FromQuery]int id)
     {
         var user = await _userRepository.GetUserByIdAsync(id);
         return Ok(user);
     }
 
-    [HttpGet("byidwithorders")]
+    [HttpGet("userbyidwithorders")]
     public async Task<IActionResult> GetUserByIdWithOrders([FromQuery] int id)
     {
         var user = await _userRepository.GetUserByIdWithOrdersAsync(id);
@@ -46,21 +46,23 @@ public class OrderController : Controller
         return Ok(user);
     }
 
-    [HttpPost]
+    [HttpPost("adduser")]
     public async Task<IActionResult> AddUser(RequestOnlyUserDTO user)
     {
         var newUser = await _userRepository.AddOnlyUserAsync(user.Name, user.SecondName);
         return Ok(newUser);
     }
 
-    [HttpPost("addAll")]
+    [HttpPost("adduserwithorders")]
     public async Task<IActionResult> AddUserWithOrders(RequestUserDTO userDto)
     {
         var user = await _userRepository.AddUserAsync(userDto);
         return Ok(user);
     }
+    
+    //---------------------------Orders-----------------------------//
 
-    [HttpGet("allorders")]
+    [HttpGet("orders")]
     public async Task<IActionResult> GetAllOrders([FromQuery] OrderFilter orderFilter)
     {
         var order = await _orderRepository.GetAll(orderFilter);
@@ -70,6 +72,21 @@ public class OrderController : Controller
         
         return Ok(order);
     }
+
+    [HttpGet("orderbyid")]
+    public async Task<IActionResult> GetOrderById([FromQuery] int id)
+    {
+        var order =  await _orderRepository.GetById(id);
+        return Ok(order);
+    }
+
+    [HttpPost("createorder")]
+    public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDTO order)
+    {
+        await _orderRepository.Insert(order);
+        return Ok(order);
+    }
+    
     
     
 

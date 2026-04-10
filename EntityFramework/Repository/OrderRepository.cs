@@ -1,43 +1,68 @@
 using Application.Filters;
 using EntityFramework.Repository;
 using Microsoft.EntityFrameworkCore;
+using Orders_WabApi.DTO.Requests;
 using Orders_WabApi.Entity;
 
 namespace EntityFramework.Repository;
 
 public class OrderRepository(ApplicationContext context) : IOrderRepository
 {
-    public Task<List<Order>> GetAll(OrderFilter orderFilter)
+    public async Task<List<Order>> GetAll(OrderFilter orderFilter)
     {
-        var orders = context.Orders.FilterByName(orderFilter)
+        var _orders = await context.Orders.FilterByName(orderFilter)
                                                  .AsNoTracking()
                                                  .FilterFromDateTo(orderFilter)
                                                  .ToListAsync();
-        return orders;
+        return _orders;
     }
 
-    public Task<Order> GetById(int id)
+    public async Task<Order> GetById(int id)
     {
-        throw new NotImplementedException();
+        var _order = await context.Orders.AsNoTracking()
+                                         .FirstOrDefaultAsync(o => o.Id == id);
+        return _order;
     }
 
-    public Task Insert(Order order)
+    public async Task Insert(CreateOrderDTO order)
     {
-        throw new NotImplementedException();
+        var _order = new Order
+        {
+            UserId = order.UserId,
+            Name = order.Name,
+            Description = order.Description,
+            OrderDate =  DateTime.UtcNow,
+            OrderItem = new OrderItem
+            {
+                Name = order.OrderItem.Name,
+                Description = order.OrderItem.Description,
+                Price = order.OrderItem.Price,
+            }
+        };
+        
+        context.Orders.Add(_order);
+        await context.SaveChangesAsync();
     }
 
-    public Task Update(Order order)
+    public async Task Update(Order order)
     {
-        throw new NotImplementedException();
+        var _orders = await context.Orders.FirstOrDefaultAsync(o => o.Id == order.Id);
+
+        if (_orders is null)
+            return;
+        
+        _orders.Name = order.Name;
+        _orders.Description = order.Description;
     }
 
     public Task Delete(int id)
     {
-        throw new NotImplementedException();
+         var order = context.Orders.Remove(context.Orders .FirstOrDefault(o => o.Id == id));
+         return Task.CompletedTask;
     }
 
-    public Task Save()
+    public async Task Save()
     {
-        throw new NotImplementedException();
+        await context.SaveChangesAsync();
     }
 }
