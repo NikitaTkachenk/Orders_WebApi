@@ -1,3 +1,4 @@
+using Application.Filters;
 using Microsoft.EntityFrameworkCore;
 using Orders_WabApi.DTO.Requests;
 using Orders_WabApi.Entity;
@@ -102,9 +103,9 @@ public class UserRepository(ApplicationContext context)
         };
     }
 
-    public async Task<List<RequestUserDTO>> GetAllUsersWithOrdersAsync()
+    public async Task<List<RequestUserDTO>> GetAllUsersWithOrdersAsync(UserFilter userFilter)
     {
-        var users = await context.User.Include(u => u.Orders)
+        var users = await context.User.Filter(userFilter).Include(u => u.Orders)
             .ThenInclude(o => o.OrderItem).AsNoTracking().ToListAsync();;
         // Eager loading - Для загрузки связывающих елементов.
         return users.Select(u => new RequestUserDTO
@@ -122,6 +123,8 @@ public class UserRepository(ApplicationContext context)
                 }
             }).ToList()
         }).ToList();
+
+        
     }
     
 }

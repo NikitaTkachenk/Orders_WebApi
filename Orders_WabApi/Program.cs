@@ -1,6 +1,7 @@
 using FluentValidation;
 using Orders_WabApi.DTO.Requests;
 using EntityFramework;
+using EntityFramework.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddValidation();
 builder.Services.AddDataBase();
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
 

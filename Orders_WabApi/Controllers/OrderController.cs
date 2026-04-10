@@ -1,4 +1,6 @@
+using Application.Filters;
 using EntityFramework;
+using EntityFramework.Repository;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Orders_WabApi.DTO.Requests;
@@ -11,17 +13,19 @@ namespace Orders_WabApi.Controllers;
 [Route("users")]
 public class OrderController : Controller
 {
+    private readonly IOrderRepository _orderRepository;
     private readonly UserRepository _userRepository;
     
-    public OrderController(UserRepository userRepository)
+    public OrderController(UserRepository userRepository, IOrderRepository  orderRepository)
     {
         _userRepository = userRepository;
+        _orderRepository = orderRepository;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllUsersWithOrders()
+    [HttpGet("userstfilter")]
+    public async Task<IActionResult> GetAllUsersWithOrders([FromQuery]UserFilter userFilter)
     {
-        var users = await _userRepository.GetAllUsersWithOrdersAsync();
+        var users = await _userRepository.GetAllUsersWithOrdersAsync(userFilter);
         return Ok(users);
     }
 
@@ -54,6 +58,17 @@ public class OrderController : Controller
     {
         var user = await _userRepository.AddUserAsync(userDto);
         return Ok(user);
+    }
+
+    [HttpGet("allorders")]
+    public async Task<IActionResult> GetAllOrders([FromQuery] OrderFilter orderFilter)
+    {
+        var order = await _orderRepository.GetAll(orderFilter);
+        
+        if(order == null)
+            return BadRequest(order);
+        
+        return Ok(order);
     }
     
     
